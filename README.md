@@ -16,6 +16,12 @@ pip3 install -r requirements.txt
 ```
 Then take a look at _example/output_ (output folder) and you will see the final output which has been deduplicated.
 
+### Some configs you should know about
+
+In the _faumixer.py_ there is \*RATIO_THRESHOLD\* and \*CHAR_THRESHOLD\*. You can changed them to match your needs. These two values indicate:
+1. If the ration of duplicated regions in a text/total legnth is higher than \*RATIO_THRESHOLD\*, drop the entry
+2. If the duplicated retio is higher than threshold but the length of unique parts are bigger than \*CHAR_THRESHOLD\*, keep the entry.
+
 ### My use case:
 I was trying to clean a dataset of text chunks to fine-tune an LLM.
 
@@ -28,7 +34,5 @@ The dataset consists of *jsonl* files:
 ```
 
 # TODO / UP COMING
-0. Upload files and scripts
-1. Add an example for demonstration
-2. Add concurrency for "drop" tagging
-3. Refactor a bit and make it user friendly
+1. Add concurrency for "drop" tagging
+2. Refactor a bit and make it user friendly
