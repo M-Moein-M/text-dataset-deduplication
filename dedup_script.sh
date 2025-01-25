@@ -9,9 +9,9 @@ PROCESSES=16
 
 # Print usage if --help is used
 if [ "$1" == "--help" ]; then
-    echo "Usage: $0 [threshold] [input_documents_path] [output_path]"
+    echo "Usage: $0 [threshold] [input directory]"
     echo "Default values:"
-    echo "  length threshold (i.e. 100)"
+    echo "  deduplication threshold (i.e. 0.5)"
     echo "  input directory (i.e. example/)"
     exit 0
 fi
