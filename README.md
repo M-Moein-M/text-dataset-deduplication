@@ -34,7 +34,7 @@ example/                                                # you can think of it as
 ```
 
 
-2. The _deduplication threshold_ is used as follows. If the ration of [[duplicated regions in a text]]/[[total legnth]] is higher or equal to the threshold, the entry is dropped.
+2. The _deduplication threshold_ (the one that is passed to the script when you execute it) is used as follows. If the ration of [duplicated regions in a text]/[total legnth of the text] is higher or equal to the threshold, the entry is dropped.
 
 ### My use case:
 I was trying to clean a dataset of text chunks to fine-tune an LLM.
