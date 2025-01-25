@@ -1,18 +1,18 @@
 #!/bin/bash
 
 # Check if all arguments are provided, otherwise use default values
-THRESHOLD=${1:-100}
-INPUT_DOCUMENTS=${2:-"example/documents/*.jsonl"}
-OUTPUT_PATH=${3:-"example/output/documents"}
+THRESHOLD=$1
+INPUT_DIR=$2
+INPUT_DOCUMENTS=$INPUT_DIR/documents/*.jsonl
+OUTPUT_PATH=$INPUT_DIR/output/
 PROCESSES=16
 
 # Print usage if --help is used
 if [ "$1" == "--help" ]; then
     echo "Usage: $0 [threshold] [input_documents_path] [output_path]"
     echo "Default values:"
-    echo "  length threshold (default: 100)"
-    echo "  input_documents_path: (default: example/documents/*.jsonl)"
-    echo "  output_path: (default: example/output/documents)"
+    echo "  length threshold (i.e. 100)"
+    echo "  input directory (i.e. example/)"
     exit 0
 fi
 
@@ -25,8 +25,11 @@ dolma dedupe --documents "$INPUT_DOCUMENTS" --dedupe.paragraphs.attribute_name '
 echo "**** FAU mix ****"
 ATTR_NAME="drop_filter"
 echo creating folder
-mkdir -p example/attributes/$ATTR_NAME || exit 1
-python faumixer.py --input-documents "$INPUT_DOCUMENTS"
+mkdir -p $INPUT_DIR/attributes/$ATTR_NAME || exit 1
+if ! python faumixer.py --dedupe-threshold $THRESHOLD --input-documents "$INPUT_DOCUMENTS"; then
+  echo "-----  faumixer failed! -------"
+  exit 1;
+fi 
 
 echo "**** dolma mix ****"
 # Create a temporary file
