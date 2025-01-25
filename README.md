@@ -8,19 +8,33 @@
 ### Quick Example
 Take a look at the sample dataset in _example/_ folder and run the following to deduplicate the example dataset.
 ``` bash
-python -m venv dedupenv
+python -m venv dedupenv  # create environment
 source dedupenv/bin/activate  # on Windows change to .\dedupenv\Scripts\activate
 pip install --upgrade pip
 pip3 install -r requirements.txt
-./dedup_script.sh 10 'example/documents/*.jsonl' 'example/output'  # for arguments description try ./dedup_script.sh --help
+./dedup_script.sh 0.5 example/'  # for arguments description try ./dedup_script.sh --help
 ```
 Then take a look at _example/output_ (output folder) and you will see the final output which has been deduplicated.
 
 ### Some configs you should know about
 
-In the _faumixer.py_ there is \*RATIO_THRESHOLD\* and \*CHAR_THRESHOLD\*. You can changed them to match your needs. These two values indicate:
-1. If the ration of duplicated regions in a text/total legnth is higher than \*RATIO_THRESHOLD\*, drop the entry
-2. If the duplicated retio is higher than threshold but the length of unique parts are bigger than \*CHAR_THRESHOLD\*, keep the entry.
+1. Your documents (jsonl files) should be in _documents_ directory. You can take a look at _example/_ directory to understand the structure:
+```
+example/                                                # you can think of it as your workspace							
+├└── output                                             # the deduplicated results will be stored here
+├└──    dedup_process-0000.json.gz
+├└── documents                                          # IMPORTANT your documents to deduplicate should be stored in documents/ directory"
+├└──    sample.jsonl
+├└──    sample2.jsonl
+├└── attributes                                         # you can delete this safely after the process is finished
+├└──    drop_filter
+├└──    whitespace_tokenizer_with_paragraphs_v1
+├└──    bff_duplicate_paragraph_spans
+├└──    char_length_with_paragraphs_v1
+```
+
+
+2. The _deduplication threshold_ is used as follows. If the ration of [[duplicated regions in a text]]/[[total legnth]] is higher or equal to the threshold, the entry is dropped.
 
 ### My use case:
 I was trying to clean a dataset of text chunks to fine-tune an LLM.
